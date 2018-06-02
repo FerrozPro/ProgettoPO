@@ -14,7 +14,7 @@ public class Node<E> {
 		return elem;
 	}
 
-	// TODO: da verificare se rendere il noido mutabile o meno
+	// TODO: da verificare se rendere il nodo mutabile o meno
 	public void setElem(E elem) {
 		this.elem = elem;
 	}
