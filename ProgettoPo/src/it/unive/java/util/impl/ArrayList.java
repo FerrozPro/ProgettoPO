@@ -3,6 +3,7 @@ package it.unive.java.util.impl;
 import it.unive.java.util.exceptions.NotFoundException;
 import it.unive.java.util.interfaces.Iterator;
 import it.unive.java.util.interfaces.List;
+import it.unive.java.util.iterators.ArrayListIterator;
 
 public class ArrayList<E> implements List<E> {
 
@@ -26,15 +27,16 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void insertAt(int position, E elem) throws NotFoundException {
+		System.out.println("Called ArrayList.insertAt(" + position + "," + elem + ")");
 		if (position > size())
-			throw new NotFoundException("ArrayList.insertAt(): cannot insert at position " + position);
+			throw new NotFoundException("ArrayList.insertAt(): cannot insert at position " + position
+					+ ". Max position available " + size());
 		if (position == 0) {
 			this.head = new Node<E>(elem, null);
 		} else {
 			Node<E> aux = this.head;
 			while (--position != 0) {
 				aux = aux.getNext();
-				--position;
 			}
 			aux.setNext(new Node<E>(elem, aux.getNext()));
 		}
@@ -50,15 +52,16 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void removeAt(int position) throws NotFoundException {
+		System.out.println("Called ArrayList.removeAt(" + position + ")");
 		if (position >= size())
-			throw new NotFoundException("ArrayList.removeAt(): cannot remove at position " + position);
+			throw new NotFoundException("ArrayList.removeAt(): cannot remove at position " + position
+					+ ". Max position available " + (size() - 1));
 		if (position == 0) {
 			head = head.getNext();
 		} else {
 			Node<E> aux = head;
 			while (--position != 0) {
 				aux = aux.getNext();
-				--position;
 			}
 			aux.setNext(aux.getNext().getNext());
 		}
@@ -72,15 +75,17 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public E getAt(int position) throws NotFoundException {
+		System.out.println("Called ArrayList.getAt(" + position + ")");
 		if (position >= size())
-			throw new NotFoundException("ArrayList.getAt(): cannot get at position " + position);
+			throw new NotFoundException("ArrayList.getAt(): cannot get at position " + position
+					+ ". Max position available " + (size() - 1));
 		if (position == 0) {
 			return head.getElem();
 		} else {
 			Node<E> aux = head;
-			while (position != 0) {
+			while (position-- != 0) {
 				aux = aux.getNext();
-				--position;
+				// --position;
 			}
 			return aux.getElem();
 		}
@@ -113,7 +118,18 @@ public class ArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public Iterator<E> iterator() {
+	public Iterator<E> iterator(IteratorType value) {
+		switch (value) {
+		case INNER:
+			return innerIterator();
+		case OUTER:
+			return new ArrayListIterator<E>(this);
+		default:
+			return innerIterator();
+		}
+	}
+
+	public Iterator<E> innerIterator() {
 		return new Iterator<E>() {
 
 			int position = 0;
