@@ -7,6 +7,8 @@ public interface List<E> extends Iterable<E> {
 	void insertHead(E elem);
 
 	void insertAt(int position, E elem) throws NotFoundException;
+	
+	void add(E elem);
 
 	void removeHead() throws NotFoundException;
 
@@ -20,5 +22,9 @@ public interface List<E> extends Iterable<E> {
 	// void concat(List<E> l);
 
 	int size();
+	
+	void clear();
+	
+	boolean isEmpty();
 
 }

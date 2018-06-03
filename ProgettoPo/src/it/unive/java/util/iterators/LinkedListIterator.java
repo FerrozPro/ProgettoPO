@@ -1,15 +1,15 @@
 package it.unive.java.util.iterators;
 
 import it.unive.java.util.exceptions.NotFoundException;
-import it.unive.java.util.impl.list.ArrayList;
+import it.unive.java.util.impl.list.LinkedList;
 import it.unive.java.util.interfaces.Iterator;
 
-public class ArrayListIterator<E> implements Iterator<E> {
+public class LinkedListIterator<E> implements Iterator<E> {
 
 	private int position;
-	private ArrayList<E> enclosing;
+	private LinkedList<E> enclosing;
 
-	public ArrayListIterator(ArrayList<E> enclosing) {
+	public LinkedListIterator(LinkedList<E> enclosing) {
 		this.position = 0;
 		this.enclosing = enclosing;
 	}

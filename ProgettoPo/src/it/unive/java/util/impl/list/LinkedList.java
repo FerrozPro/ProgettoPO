@@ -1,16 +1,17 @@
-package it.unive.java.util.impl;
+package it.unive.java.util.impl.list;
 
 import it.unive.java.util.exceptions.NotFoundException;
 import it.unive.java.util.interfaces.Iterator;
 import it.unive.java.util.interfaces.List;
-import it.unive.java.util.iterators.ArrayListIterator;
+import it.unive.java.util.iterators.LinkedListIterator;
+import it.unive.java.util.iterators.IteratorType;
 
-public class ArrayList<E> implements List<E> {
+public class LinkedList<E> implements List<E> {
 
 	private Node<E> head;
 	private int size;
 
-	public ArrayList() {
+	public LinkedList() {
 		this.head = null;
 		this.size = 0;
 	}
@@ -27,9 +28,11 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void insertAt(int position, E elem) throws NotFoundException {
-		System.out.println("Called ArrayList.insertAt(" + position + "," + elem + ")");
+
+		// System.out.println("Called LinkedList.insertAt(" + position + "," + elem +
+		// ")");
 		if (position > size())
-			throw new NotFoundException("ArrayList.insertAt(): cannot insert at position " + position
+			throw new NotFoundException("LinkedList.insertAt(): cannot insert at position " + position
 					+ ". Max position available " + size());
 		if (position == 0) {
 			this.head = new Node<E>(elem, null);
@@ -41,7 +44,15 @@ public class ArrayList<E> implements List<E> {
 			aux.setNext(new Node<E>(elem, aux.getNext()));
 		}
 		++size;
+	}
 
+	@Override
+	public void add(E elem) {
+		try {
+			insertAt(size(), elem);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -52,9 +63,9 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void removeAt(int position) throws NotFoundException {
-		System.out.println("Called ArrayList.removeAt(" + position + ")");
+		System.out.println("Called LinkedList.removeAt(" + position + ")");
 		if (position >= size())
-			throw new NotFoundException("ArrayList.removeAt(): cannot remove at position " + position
+			throw new NotFoundException("LinkedList.removeAt(): cannot remove at position " + position
 					+ ". Max position available " + (size() - 1));
 		if (position == 0) {
 			head = head.getNext();
@@ -75,9 +86,9 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public E getAt(int position) throws NotFoundException {
-		System.out.println("Called ArrayList.getAt(" + position + ")");
+		System.out.println("Called LinkedList.getAt(" + position + ")");
 		if (position >= size())
-			throw new NotFoundException("ArrayList.getAt(): cannot get at position " + position
+			throw new NotFoundException("LinkedList.getAt(): cannot get at position " + position
 					+ ". Max position available " + (size() - 1));
 		if (position == 0) {
 			return head.getElem();
@@ -91,9 +102,9 @@ public class ArrayList<E> implements List<E> {
 		}
 	}
 
-	// TODO: check che l sia un ArrayList
+	// TODO: check che l sia un LinkedList
 	// @Override
-	public void concat(ArrayList<E> l) throws NotFoundException {
+	public void concat(LinkedList<E> l) throws NotFoundException {
 		if (head == null) {
 			head = new Node<E>(l.getHead(), null);
 			l.removeHead();
@@ -118,12 +129,25 @@ public class ArrayList<E> implements List<E> {
 	}
 
 	@Override
+	public void clear() {
+		if (head != null) {
+			head = null;
+			size = 0;
+		}
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
+	@Override
 	public Iterator<E> iterator(IteratorType value) {
 		switch (value) {
 		case INNER:
 			return innerIterator();
 		case OUTER:
-			return new ArrayListIterator<E>(this);
+			return new LinkedListIterator<E>(this);
 		default:
 			return innerIterator();
 		}

@@ -1,4 +1,4 @@
-package it.unive.java.util.impl;
+package it.unive.java.util.iterators;
 
 public enum IteratorType {
 	
