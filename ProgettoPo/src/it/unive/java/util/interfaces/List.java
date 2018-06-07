@@ -18,9 +18,6 @@ public interface List<E> extends Iterable<E> {
 
 	E getAt(int position) throws NotFoundException;
 
-	// TODO : check se possibile farlo oppure no
-	// void concat(List<E> l);
-
 	int size();
 	
 	void clear();

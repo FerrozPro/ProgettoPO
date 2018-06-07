@@ -4,7 +4,6 @@ import it.unive.java.util.exceptions.NotFoundException;
 import it.unive.java.util.interfaces.Iterator;
 import it.unive.java.util.interfaces.List;
 import it.unive.java.util.iterators.ArrayListIterator;
-import it.unive.java.util.iterators.IteratorType;
 
 public class ArrayList<E> implements List<E> {
 
@@ -26,6 +25,7 @@ public class ArrayList<E> implements List<E> {
 	}
 
 	private void grow() {
+		System.out.println("Called ArrayList.grow()");
 		Object[] aux = new Object[arrayLength + sizeIncrement];
 		for (int i = 0; i < arrayLength; i++) {
 			aux[i] = array[i];
@@ -36,6 +36,7 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void insertHead(E elem) {
+		System.out.println("Called ArrayList.insertHead()");
 		try {
 			insertAt(0, elem);
 		} catch (NotFoundException e) {
@@ -44,11 +45,13 @@ public class ArrayList<E> implements List<E> {
 	}
 
 	private boolean checkGrow(int position) {
+		System.out.println("Called ArrayList.checkGrow()");
 		return position >= arrayLength;
 	}
 
 	@Override
 	public void insertAt(int position, E elem) throws NotFoundException {
+		System.out.println("Called ArrayList.insertAt(" + position + "," + elem + ")");
 		if (position > size()) {
 			throw new NotFoundException("ArrayList.insertAt(): cannot insert at position " + position
 					+ ". Max position available " + size());
@@ -62,6 +65,7 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void add(E elem) {
+		System.out.println("Called ArrayList.add()");
 		try {
 			insertAt(size(), elem);
 		} catch (NotFoundException e) {
@@ -72,11 +76,13 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void removeHead() throws NotFoundException {
+		System.out.println("Called ArrayList.removeHead()");
 		removeAt(0);
 	}
 
 	@Override
 	public void removeAt(int position) throws NotFoundException {
+		System.out.println("Called ArrayList.removeAt(" + position + ")");
 		if (position >= size()) {
 			throw new NotFoundException("ArrayList.removeAt(): cannot remove at position " + position);
 		} else {
@@ -89,12 +95,14 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public E getHead() throws NotFoundException {
+		System.out.println("Called ArrayList.getHead()");
 		return getAt(0);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public E getAt(int position) throws NotFoundException {
+		System.out.println("Called ArrayList.getAt(" + position + ")");
 		if (position >= size()) {
 			throw new NotFoundException(
 					"ArrayList.getAt(): cannot get at position " + position + ". Max position available " + size());
@@ -110,6 +118,7 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void clear() {
+		System.out.println("Called ArrayList.clear()");
 		size = 0;
 	}
 
@@ -119,20 +128,13 @@ public class ArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public Iterator<E> iterator(IteratorType value) {
-		switch (value) {
-		case INNER:
-			return innerIterator();
-		case OUTER:
-			return new ArrayListIterator<E>(this);
-		default:
-			return innerIterator();
-		}
+	public Iterator<E> iterator() {
+		// return innerIterator();
+		return new ArrayListIterator<E>(this);
 	}
 
 	public Iterator<E> innerIterator() {
 		return new Iterator<E>() {
-
 			int position = 0;
 
 			@Override
@@ -149,7 +151,6 @@ public class ArrayList<E> implements List<E> {
 					throw new RuntimeException("Iterator.next() failed");
 				}
 			}
-
 		};
 	}
 }

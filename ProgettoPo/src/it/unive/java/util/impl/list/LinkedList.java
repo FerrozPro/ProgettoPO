@@ -3,8 +3,6 @@ package it.unive.java.util.impl.list;
 import it.unive.java.util.exceptions.NotFoundException;
 import it.unive.java.util.interfaces.Iterator;
 import it.unive.java.util.interfaces.List;
-import it.unive.java.util.iterators.LinkedListIterator;
-import it.unive.java.util.iterators.IteratorType;
 
 public class LinkedList<E> implements List<E> {
 
@@ -18,6 +16,7 @@ public class LinkedList<E> implements List<E> {
 
 	@Override
 	public void insertHead(E elem) {
+		System.out.println("Called LinkedList.insertHead()");
 		try {
 			insertAt(0, elem);
 
@@ -28,9 +27,7 @@ public class LinkedList<E> implements List<E> {
 
 	@Override
 	public void insertAt(int position, E elem) throws NotFoundException {
-
-		// System.out.println("Called LinkedList.insertAt(" + position + "," + elem +
-		// ")");
+		System.out.println("Called LinkedList.insertAt(" + position + "," + elem + ")");
 		if (position > size())
 			throw new NotFoundException("LinkedList.insertAt(): cannot insert at position " + position
 					+ ". Max position available " + size());
@@ -48,6 +45,7 @@ public class LinkedList<E> implements List<E> {
 
 	@Override
 	public void add(E elem) {
+		System.out.println("Called LinkedList.add(" + elem + ")");
 		try {
 			insertAt(size(), elem);
 		} catch (NotFoundException e) {
@@ -57,8 +55,8 @@ public class LinkedList<E> implements List<E> {
 
 	@Override
 	public void removeHead() throws NotFoundException {
+		System.out.println("Called LinkedList.removeHead()");
 		removeAt(0);
-
 	}
 
 	@Override
@@ -81,6 +79,7 @@ public class LinkedList<E> implements List<E> {
 
 	@Override
 	public E getHead() throws NotFoundException {
+		System.out.println("Called LinkedList.getHead()");
 		return getAt(0);
 	}
 
@@ -102,9 +101,8 @@ public class LinkedList<E> implements List<E> {
 		}
 	}
 
-	// TODO: check che l sia un LinkedList
-	// @Override
 	public void concat(LinkedList<E> l) throws NotFoundException {
+		System.out.println("Called LinkedList.concat()");
 		if (head == null) {
 			head = new Node<E>(l.getHead(), null);
 			l.removeHead();
@@ -130,6 +128,7 @@ public class LinkedList<E> implements List<E> {
 
 	@Override
 	public void clear() {
+		System.out.println("Called LinkedList.clear()");
 		if (head != null) {
 			head = null;
 			size = 0;
@@ -142,15 +141,9 @@ public class LinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public Iterator<E> iterator(IteratorType value) {
-		switch (value) {
-		case INNER:
-			return innerIterator();
-		case OUTER:
-			return new LinkedListIterator<E>(this);
-		default:
-			return innerIterator();
-		}
+	public Iterator<E> iterator() {
+		return innerIterator();
+		// return new LinkedListIterator<E>(this);
 	}
 
 	public Iterator<E> innerIterator() {

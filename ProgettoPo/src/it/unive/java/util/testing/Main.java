@@ -1,85 +1,123 @@
 package it.unive.java.util.testing;
 
-
 import it.unive.java.util.exceptions.NotFoundException;
 import it.unive.java.util.impl.list.ArrayList;
 import it.unive.java.util.impl.list.LinkedList;
+import it.unive.java.util.impl.map.LinkedMap;
 import it.unive.java.util.interfaces.Iterator;
 import it.unive.java.util.interfaces.List;
-import it.unive.java.util.iterators.IteratorType;
+import it.unive.java.util.interfaces.Map;
 
 public class Main {
 
 	public static void main(String[] args) {
-		List<Integer> listaUno = new LinkedList<Integer>();
-		// List<Integer> listaDue = new DualLinkList<Integer>();
+		List<Integer> linkedListOne = new LinkedList<Integer>();
 
-		listaUno.insertHead(0);
+		linkedListOne.insertHead(0);
 		try {
-			listaUno.insertAt(1, 2);
+			linkedListOne.insertAt(1, 2);
 		} catch (NotFoundException e) {
+			e.printStackTrace();
 		}
 		try {
-			listaUno.insertAt(3, 20);
+			linkedListOne.insertAt(3, 20);
 		} catch (NotFoundException e) {
+			e.printStackTrace();
 		}
 		try {
-			listaUno.insertAt(2, 20);
+			linkedListOne.insertAt(2, 20);
 		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out.println("listaUno.getAt(2) = " + linkedListOne.getAt(2));
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out.println("listaUno.getHead() = " + linkedListOne.getHead());
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			linkedListOne.removeHead();
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			linkedListOne.removeAt(2);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out.println("listaUno.getAt(2) = " + linkedListOne.getAt(2));
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("listaUno.size() = " + linkedListOne.size());
+		System.out.println("listaUno.iterator()");
+		for (Iterator<Integer> i = linkedListOne.iterator(); i.hasNext();) {
+			int value = i.next();
+			System.out.println("iterator i value = " + value);
 		}
 
-		try {
-			System.out.println("listaUno.getAt(2) = " + listaUno.getAt(2));
-		} catch (NotFoundException e) {
-		}
-		try {
-			System.out.println("listaUno.getHead() = " + listaUno.getHead());
-		} catch (NotFoundException e) {
-		}
-		try {
-			listaUno.removeHead();
-		} catch (NotFoundException e) {
-		}
-		try {
-			// listaUno.removeAt(2);
-			System.out.println("listaUno.getAt(2) = " + listaUno.getAt(2));
-		} catch (NotFoundException e) {
-		}
-		System.out.println("listaUno.size() = " + listaUno.size());
+		System.out.println("######################################################");
+		System.out.println("#################### FINE listaUno ###################");
+		System.out.println("######################################################");
 
-		System.out.println("listaUno.iterator(IteratorType.INNER)");
-		for (Iterator<Integer> i = listaUno.iterator(IteratorType.INNER); i.hasNext();) {
+		ArrayList<Integer> arrayListOne = new ArrayList<Integer>();
+		arrayListOne.insertHead(1);
+		try {
+			arrayListOne.removeAt(1);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			arrayListOne.insertAt(1, 2);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		arrayListOne.add(3);
+		for (Iterator<Integer> i = arrayListOne.iterator(); i.hasNext();) {
 			int value = i.next();
 			System.out.println(value);
 		}
-		System.out.println("listaUno.iterator(IteratorType.OUTER)");
-		for (Iterator<Integer> i = listaUno.iterator(IteratorType.OUTER); i.hasNext();) {
-			int value = i.next();
-			System.out.println(value);
-		}
-		
-		Object[] a = new Object[10];
-		for (Object i : a) {
-			System.out.println(i);
-		}
-		
-		ArrayList<Integer> b = new ArrayList<Integer>();
-		b.insertHead(1);
+		arrayListOne.clear();
 		try {
-			b.removeAt(1);
-		} catch (NotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			arrayListOne.getAt(1);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
 		}
+		arrayListOne.insertHead(2);
 		try {
-			b.insertAt(1, 2);
-		} catch (NotFoundException e) {e.printStackTrace();}
-		b.add(3);
-		
-		for (Iterator<Integer> i = b.iterator(IteratorType.OUTER); i.hasNext();) {
-			int value = i.next();
-			System.out.println(value);
+			System.out.println("arrayListOne.getHead() = " + arrayListOne.getHead());
+		} catch (NotFoundException e) {
+			e.printStackTrace();
 		}
 
+		System.out.println("######################################################");
+		System.out.println("#################### FINE listaUno ###################");
+		System.out.println("######################################################");
+
+		Map<String,Integer> linkedMapOne = new LinkedMap<String,Integer>();
+		linkedMapOne.put("uno", 1);
+		linkedMapOne.clear();
+		linkedMapOne.put("due", 2);
+		linkedMapOne.put("tre", 3);
+		linkedMapOne.containsKey("due");
+		linkedMapOne.containsKey("uno");
+		System.out.println("linkedMapOne.get(\"due\") = " + linkedMapOne.get("due"));
+		List<String> keySet = linkedMapOne.keySet();
+		List<Integer> values = linkedMapOne.values();
+		System.out.println("keySet = ");
+		for(Iterator<String> iter = keySet.iterator(); iter.hasNext();) {
+			String value = iter.next();
+			System.out.println(value);
+		}
+		System.out.println("values = ");
+		for(Iterator<Integer> iter = values.iterator(); iter.hasNext();) {
+			Integer value = iter.next();
+			System.out.println(value);
+		}
 	}
 }
