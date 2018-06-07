@@ -23,5 +23,7 @@ public interface List<E> extends Iterable<E> {
 	void clear();
 	
 	boolean isEmpty();
+	
+	public void concat(List<E> l) throws NotFoundException;
 
 }

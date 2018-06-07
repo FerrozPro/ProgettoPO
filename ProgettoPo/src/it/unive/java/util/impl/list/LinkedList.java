@@ -101,23 +101,12 @@ public class LinkedList<E> implements List<E> {
 		}
 	}
 
-	public void concat(LinkedList<E> l) throws NotFoundException {
+	@Override
+	public void concat(List<E> l) throws NotFoundException {
 		System.out.println("Called LinkedList.concat()");
-		if (head == null) {
-			head = new Node<E>(l.getHead(), null);
-			l.removeHead();
-		}
-		Node<E> aux = head;
-		int position = size() - 1;
-		while (position != 0) {
-			aux = aux.getNext();
-			--position;
-		}
-		position = l.size() - 1;
-		while (position != 0) {
-			aux.setNext(new Node<E>(l.getHead(), null));
-			l.removeHead();
-			aux = aux.getNext();
+		for(Iterator<E> iter = l.iterator(); iter.hasNext();) {
+			E value = iter.next();
+			add(value);
 		}
 	}
 

@@ -126,6 +126,15 @@ public class ArrayList<E> implements List<E> {
 	public boolean isEmpty() {
 		return size() == 0;
 	}
+	
+	@Override
+	public void concat(List<E> l) throws NotFoundException {
+		System.out.println("Called ArrayList.concat()");
+		for(Iterator<E> iter = l.iterator(); iter.hasNext();) {
+			E value = iter.next();
+			add(value);
+		}
+	}
 
 	@Override
 	public Iterator<E> iterator() {

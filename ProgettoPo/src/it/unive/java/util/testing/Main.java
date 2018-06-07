@@ -119,5 +119,41 @@ public class Main {
 			Integer value = iter.next();
 			System.out.println(value);
 		}
+		
+		System.out.println("######################################################");
+		System.out.println("#################### FINE map ###################");
+		System.out.println("######################################################");
+		
+		List<Integer> l1 = new LinkedList<Integer>();
+		List<Integer> l2 = new ArrayList<Integer>();
+		List<String> l3 = new LinkedList<String>();
+		
+		l1.add(1);
+		l2.add(2);
+		l3.add("ciao");
+		
+		try {
+			l1.concat(l2);
+			System.out.println("concat");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		for(Iterator<Integer> iter = l1.iterator(); iter.hasNext();) {
+			Integer value = iter.next();
+			System.out.println(value);
+		}
+		try {
+			l2.concat(l1);
+			System.out.println("concat");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		for(Iterator<Integer> iter = l2.iterator(); iter.hasNext();) {
+			Integer value = iter.next();
+			System.out.println(value);
+		}
+		
 	}
 }
